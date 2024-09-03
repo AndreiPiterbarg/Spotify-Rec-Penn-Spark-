@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Song Recommendations</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Spotify Song Recommendations</h1>
+        <div class="form-group">
+            <input type="text" id="song-input" placeholder="Enter a song">
+        </div>
+        <ul id="songs" class="list-group"></ul>
+        <div class="centered-button">
+            <button id="get-recommendations">Get Recommendations</button>
+        </div>
+        <ul id="suggestions-container" class="list-group"></ul>
+        <ul id="recommended-songs" class="list-group"></ul>
+    </div>
+    <div id="notification" class="notification">
+        <span id="notification-text"></span>
+        <button id="close-notification" class="close-btn">×</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

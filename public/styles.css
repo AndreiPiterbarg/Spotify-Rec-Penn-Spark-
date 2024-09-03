@@ -1,0 +1,203 @@
+/* General body styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #191414;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Container styles */
+.container {
+    max-width: 600px;
+    width: 100%;
+    background: #121212;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Title styles */
+h1 {
+    text-align: center;
+    color: #1DB954;
+    font-size: 3.5em;
+    margin-bottom: 20px;
+    animation: fadeIn 1s ease-in-out;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Form group styles */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Input styles */
+input[type="text"] {
+    padding: 15px;
+    border: none;
+    border-radius: 25px;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 400px;
+    background: #333;
+    color: #fff;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+input[type="text"]:focus {
+    background: #444;
+    outline: none;
+}
+
+/* Button styles */
+button {
+    background: linear-gradient(45deg, #1DB954, #1ed760);
+    color: #fff;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+button:disabled {
+    background: #555;
+
+}
+
+button:hover:not(:disabled) {
+    background: linear-gradient(45deg, #1ed760, #1DB954);
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Centered button container */
+.centered-button {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+/* List styles */
+ul.list-group {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul.list-group li {
+    display: flex;
+    align-items: center;
+    background: #333;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+ul.list-group li:hover {
+    background: #444;
+}
+
+/* Notification styles */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #f44336;
+    color: #fff;
+    padding: 15px 40px 15px 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    display: none;
+    max-width: 90%;
+    z-index: 1000;
+    font-size: 16px;
+    text-align: center;
+}
+
+.notification.error {
+    background: #f44336;
+}
+
+.suggestion.error {
+    color: #f44336;
+}
+
+.notification.show {
+    display: block;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    padding: 5px;
+    line-height: 1;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 2.5em;
+    }
+
+    input[type="text"] {
+        max-width: 100%;
+    }
+
+    button {
+        padding: 12px 25px;
+        font-size: 16px;
+    }
+}
