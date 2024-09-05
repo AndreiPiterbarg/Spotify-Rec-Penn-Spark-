@@ -17,3 +17,4 @@ Integration Spotify song Database
 ### Time Spent
 I spent a bit over 5 hours on this project, most of the time spent connecting to the Spotify API and perfecting the recommendation algorithm.
 ### Deployment link
+https://spotifyrecommender-51b3219a3779.herokuapp.com/
