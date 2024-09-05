@@ -1,3 +1,8 @@
+require('dotenv').config();
+
+const CLIENT_ID = process.env.CLIENT_ID1;
+const CLIENT_SECRET = process.env.CLIENT_SECRET1;
+
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -10,8 +15,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Spotify API credentials
-const CLIENT_ID = '5834606403c944a1b59a339273fc393b';
-const CLIENT_SECRET = '911180c35c5d4cc0b3337d0457df45f4';
+
 
 if (!CLIENT_ID || !CLIENT_SECRET) {
     console.error('Spotify API credentials are not set. Please set SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET environment variables.');
