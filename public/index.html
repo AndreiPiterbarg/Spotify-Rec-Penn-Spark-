@@ -11,16 +11,32 @@
 <body>
     <div class="container">
         <h1>Spotify Song Recommendations</h1>
+        <h5>Input 3-6 songs that you like to receive new song recommendations. I suggest inputting songs that are
+            similar for best results.</h5>
         <div class="form-group">
             <input type="text" id="song-input" placeholder="Enter a song">
         </div>
-        <ul id="songs" class="list-group"></ul>
-        <div class="centered-button">
-            <button id="get-recommendations">Get Recommendations</button>
-        </div>
+        <ul id="songs" class="list-group three-column"></ul>
+
         <ul id="suggestions-container" class="list-group"></ul>
-        <ul id="recommended-songs" class="list-group"></ul>
+        <div class="button-container">
+            <button id="get-recommendations">Get Recommendations</button>
+            <button id="clear-songs">Clear</button>
+
+        </div>
+
+
+        <ul id="recommended-songs" class="list-group three-column"></ul>
+
     </div>
+    <div class="unique-toggle-container">
+        <input type="checkbox" id="popularity-switch" checked>
+        <label for="popularity-switch" class="checkbox-label">Select for popular songs, deselect for underground</label>
+    </div>
+
+
+
+
     <div id="notification" class="notification">
         <span id="notification-text"></span>
         <button id="close-notification" class="close-btn">×</button>

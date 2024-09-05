@@ -5,13 +5,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const notification = document.getElementById('notification');
     const notificationText = document.getElementById('notification-text');
     const closeNotificationButton = document.getElementById('close-notification');
-    const suggestionsContainer = document.createElement('ul');
-    suggestionsContainer.id = 'suggestions-container';
-    suggestionsContainer.classList.add('list-group');
-    songInput.parentNode.insertBefore(suggestionsContainer, songInput.nextSibling);
-
+    const suggestionsContainer = document.getElementById('suggestions-container');
+    const popularitySwitch = document.getElementById('popularity-switch');
+    const recommendationsContainer = document.getElementById('recommended-songs');
+    const clearSongsButton = document.getElementById('clear-songs');
     let songs = [];
     let debounceTimer;
+
+
 
     function showNotification(message, isError = false) {
         notificationText.textContent = message;
@@ -64,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         const suggestion = document.createElement('li');
                         suggestion.classList.add('list-group-item');
                         suggestion.innerHTML = `
-                            <img src="${track.albumCover}" alt="${track.album}" class="album-cover" />
                             <div class="track-info">
                                 <span class="track-name">${track.name}</span>
                                 <span class="track-artist">${track.artist}</span>
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => {
                 console.error('Error searching for songs:', error);
                 suggestionsContainer.innerHTML = '<li class="suggestion error">Error searching for songs</li>';
-                showNotification(`An error occurred while searching for songs: ${error.message}`, true);
+                showNotification(`An error occurred while you were searching for songs: ${error.message}`, true);
             });
     }
 
@@ -92,16 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    songInput.addEventListener('keypress', (event) => {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            const query = songInput.value.trim();
-            if (query) {
-                searchSongs(query);
-            }
-        }
-    });
-
     getRecommendationsButton.addEventListener('click', () => {
         if (songs.length < 3) {
             showNotification('Please add at least 3 songs to get recommendations.', true);
@@ -112,7 +102,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ songs })
+                body: JSON.stringify({
+                    songs,
+                    includePopularity: popularitySwitch.checked
+                })
             })
                 .then(response => response.json())
                 .then(recommendations => {
@@ -124,23 +117,49 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
         }
     });
+    clearSongsButton.addEventListener('click', () => {
+        // Clear the songs array
+        songs = [];
+
+        // Clear the inputted songs list in the DOM
+        songsList.innerHTML = '';
+
+        // Clear the recommendations list in the DOM
+        recommendationsContainer.innerHTML = '';
+
+        // Optionally, disable the Get Recommendations button after clearing
+        updateRecommendationsButton();
+
+        // Show a notification if needed
+        showNotification('Songs and recommendations have been cleared.');
+    });
 
     closeNotificationButton.addEventListener('click', () => {
         notification.classList.remove('show');
         notification.classList.remove('error');
     });
 
+    popularitySwitch.addEventListener('change', () => {
+        if (popularitySwitch.checked) {
+            getRecommendationsButton.classList.add('green-button');
+        } else {
+            getRecommendationsButton.classList.remove('green-button');
+        }
+    });
+
+
     function displayRecommendations(tracks) {
-        const recommendationsContainer = document.getElementById('recommended-songs');
         recommendationsContainer.innerHTML = '';
 
         tracks.forEach(track => {
             const listItem = document.createElement('li');
+            const trackUrl = `https://open.spotify.com/track/${track.id}`; // Generate the track URL
 
-            // Removed album cover handling
             listItem.innerHTML = `
                 <div class="track-info">
-                    <div class="track-name">${track.name}</div>
+                    <a href="${trackUrl}" target="_blank" class="track-link">
+                        <div class="track-name">${track.name}</div>
+                    </a>
                     <div class="track-artist">${track.artist}</div>
                 </div>
             `;
@@ -148,6 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
             recommendationsContainer.appendChild(listItem);
         });
     }
+
 
 
     updateRecommendationsButton();

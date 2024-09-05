@@ -33,6 +33,15 @@ h1 {
     font-family: 'Poppins', sans-serif;
 }
 
+h5 {
+    text-align: center;
+    color: #ffffff;
+    font-size: 0.8em;
+    margin-bottom: 20px;
+    animation: fadeIn 1s ease-in-out;
+    font-family: 'Poppins', sans-serif;
+}
+
 /* Form group styles */
 .form-group {
     display: flex;
@@ -55,43 +64,147 @@ input[type="text"] {
     transition: background 0.3s;
 }
 
-input[type="text"]:focus {
-    background: #444;
-    outline: none;
-}
-
-/* Button styles */
-button {
-    background: linear-gradient(45deg, #1DB954, #1ed760);
-    color: #fff;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 18px;
-    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-button:disabled {
-    background: #555;
-
-}
-
-button:hover:not(:disabled) {
-    background: linear-gradient(45deg, #1ed760, #1DB954);
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-}
-
-/* Centered button container */
-.centered-button {
+/* Unique Toggle Switch Styles */
+.unique-toggle-container {
+    position: fixed;
+    top: 120px;
+    right: 70px;
     display: flex;
-    justify-content: center;
-    margin: 20px 0;
+    align-items: center;
 }
 
-/* List styles */
+.unique-switch-label {
+    position: relative;
+    width: 50px;
+    height: 26px;
+    background: #ccc;
+    border-radius: 13px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-right: 10px;
+}
+
+.unique-switch-label::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.3s90ge;
+}
+
+
+
+.unique-switch-description {
+    margin-left: 10px;
+    font-size: 1.3em;
+    color: #ffffff;
+}
+
+/* Make song links white */
+.track-link {
+    color: #fff;
+    /* White text color */
+    text-decoration: none;
+    /* Remove the underline */
+}
+
+.track-link:visited {
+    color: #fff;
+    /* Ensure visited links are also white */
+}
+
+.track-link:hover {
+    color: #1DB954;
+    /* Optional: Change color on hover to Spotify green */
+}
+
+.track-link:active {
+    color: #fff;
+    /* Keep the color white when active (clicked) */
+}
+
+
+
+.button-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+.green-button {
+    background: #1DB954;
+    /* Spotify Green */
+    transition: background 0.3s;
+}
+
+/* Remove the custom switch styles */
+#popularity-switch {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.checkbox-label {
+    font-size: 1.3em;
+    color: #ffffff;
+    vertical-align: middle;
+}
+
+/* You can also remove the switch-label styles from the previous version */
+
+
+.switch-label::after {
+    content: '';
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+    background: #ccc;
+    border-radius: 13px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s;
+    vertical-align: middle;
+}
+
+.switch-label::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    transition: transform 0.3s, background 0.3s;
+}
+
+
+
+
+/* Grid layout for lists */
+.three-column {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.three-column li {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    text-align: center;
+    background: #333;
+    color: #fff;
+}
+
+/* Ensure lists have proper styling */
 ul.list-group {
     list-style-type: none;
     padding: 0;
@@ -112,6 +225,41 @@ ul.list-group li {
 
 ul.list-group li:hover {
     background: #444;
+}
+
+input[type="text"]:focus {
+    background: #444;
+    outline: none;
+}
+
+/* Button styles */
+button {
+    background: linear-gradient(45deg, #1DB954, #1ed760);
+    color: #fff;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+button:disabled {
+    background: #555;
+}
+
+button:hover:not(:disabled) {
+    background: linear-gradient(45deg, #1ed760, #1DB954);
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Centered button container */
+.centered-button {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
 }
 
 /* Notification styles */

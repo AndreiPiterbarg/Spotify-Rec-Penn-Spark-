@@ -37,6 +37,61 @@ async function getSpotifyToken() {
     }
 }
 
+// Function to get audio features for a song
+async function getAudioFeatures(token, songId) {
+    try {
+        const response = await axios.get(`https://api.spotify.com/v1/audio-features/${songId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching audio features:', error.response ? error.response.data : error.message);
+        throw new Error('Failed to fetch audio features');
+    }
+}
+
+// Function to get recommendations based on audio features
+async function getRecommendations(token, seeds, features, includePopularity) {
+    try {
+        const params = {
+            seed_tracks: seeds.join(','),
+            target_danceability: features.danceability,
+            target_energy: features.energy,
+            target_valence: features.valence,
+            target_acousticness: features.acousticness,
+            target_instrumentalness: features.instrumentalness,
+            target_speechiness: features.speechiness,
+            target_tempo: features.tempo,
+            limit: 12
+        };
+
+        if (includePopularity) {
+            params.min_popularity = 80;
+        } else {
+            params.max_popularity = 80;
+        }
+
+        const response = await axios.get('https://api.spotify.com/v1/recommendations', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            params
+        });
+
+        return response.data.tracks.map(track => ({
+            id: track.id,
+            name: track.name,
+            artist: track.artists[0].name,
+            popularity: features.popularity
+        }));
+    } catch (error) {
+        console.error('Error fetching recommendations:', error.response ? error.response.data : error.message);
+        throw new Error('Failed to fetch recommendations');
+    }
+}
+
 // Endpoint to search for songs
 app.get('/search', async (req, res) => {
     console.log('Search route hit with query:', req.query.q);
@@ -65,6 +120,57 @@ app.get('/search', async (req, res) => {
         console.error('Error searching Spotify:', error.response ? error.response.data : error.message);
         res.status(error.response ? error.response.status : 500).json({
             error: 'An error occurred while searching for songs',
+            details: error.response ? error.response.data : error.message
+        });
+    }
+});
+
+// Endpoint to get recommendations based on selected songs
+app.post('/recommendations', async (req, res) => {
+    try {
+        const { songs, includePopularity } = req.body;
+        if (!songs || songs.length === 0) {
+            return res.status(400).json({ error: 'No songs provided for recommendations' });
+        }
+
+        const token = await getSpotifyToken();
+
+        // Fetch audio features for each song
+        const audioFeatures = await Promise.all(songs.map(song => getAudioFeatures(token, song.id)));
+
+        // Calculate average features to use for recommendations
+        const avgFeatures = audioFeatures.reduce((acc, features) => {
+            acc.danceability += features.danceability || 0;
+            acc.energy += features.energy || 0;
+            acc.valence += features.valence || 0;
+            acc.acousticness += features.acousticness || 0;
+            acc.instrumentalness += features.instrumentalness || 0;
+            acc.speechiness += features.speechiness || 0;
+            acc.tempo += features.tempo || 0;
+            return acc;
+        }, {
+            danceability: 0,
+            energy: 0,
+            valence: 0,
+            acousticness: 0,
+            instrumentalness: 0,
+            speechiness: 0,
+            tempo: 0
+        });
+
+        // Calculate averages
+        Object.keys(avgFeatures).forEach(key => {
+            avgFeatures[key] /= songs.length;
+        });
+
+        // Get recommendations based on the average features
+        const recommendations = await getRecommendations(token, songs.map(song => song.id), avgFeatures, includePopularity);
+
+        res.json(recommendations);
+    } catch (error) {
+        console.error('Error getting recommendations:', error.response ? error.response.data : error.message);
+        res.status(error.response ? error.response.status : 500).json({
+            error: 'An error occurred while fetching recommendations',
             details: error.response ? error.response.data : error.message
         });
     }
