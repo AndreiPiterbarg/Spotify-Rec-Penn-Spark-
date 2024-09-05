@@ -8,9 +8,12 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
+    /* Ensure body takes up at least full viewport height */
+    overflow-y: auto;
+    /* Enables vertical scrolling */
 }
+
 
 /* Container styles */
 .container {
@@ -21,6 +24,7 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
     padding: 20px;
     box-sizing: border-box;
+
 }
 
 /* Title styles */
@@ -127,6 +131,14 @@ input[type="text"] {
     /* Keep the color white when active (clicked) */
 }
 
+.scrollable-container {
+    height: 500px;
+    /* Adjust the height as needed */
+    overflow-y: auto;
+    /* Enables vertical scrolling */
+    overflow-x: hidden;
+    /* Disables horizontal scrolling (if not needed) */
+}
 
 
 .button-container {
