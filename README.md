@@ -7,6 +7,7 @@ I love music but sometimes feel like spotify can end up recommending the same so
 
 ### Features
 error messages
+
 popular/underground switch
 clear button
 animations
