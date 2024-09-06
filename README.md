@@ -7,11 +7,14 @@ I love music but sometimes feel like spotify can end up recommending the same so
 
 ### Features
 error messages
-popularity slider
+popular/underground switch
+clear button
 animations
-interation with Spotify API
+recommended songs --> spotify button
+Integration with Spotify API
 Integration Spotify song Database
-
+Fullstack: HTML/CSS + Node.js
+Song recommendation algorithm
 
 ### Time Spent
 I spent a bit over 5 hours on this project, most of the time spent connecting to the Spotify API and perfecting the recommendation algorithm.
